@@ -3,12 +3,17 @@
 # Changelog (bump `version` whenever a case or an expectation changes):
 #   v1  18 cases: plans, SLA, ticket lifecycle, refunds, privacy, security, one question
 #       needing two documents, three questions in Portuguese.
+#   v2  Replaced `uptime-and-credits` with `two-factor-plans-price`. E0 showed that the
+#       "Service credits" chunk of support-sla.md answers both halves of the old question on
+#       its own (it states the 99.9% commitment and the credits), so expecting a second
+#       document punished a correct retrieval. The new case cannot be answered by one
+#       document: which plans can enforce 2FA (account-security) and their price (plans).
 #
 # Questions are paraphrases: they avoid the words of the answer where a user would, so a
 # lexical match is not enough. `evidence_any` is text the retrieved chunk must contain.
 
 name = "knowledge_base"
-version = 1
+version = 2
 description = "Can the index find the help-centre article (and the passage) that answers a support question?"
 corpus = "make ingest-samples (samples/knowledge-base)"
 k = 5
@@ -134,12 +139,12 @@ sources = ["policies/data-retention-and-privacy.md"]
 evidence_any = ["60 days"]
 
 [[cases]]
-id = "uptime-and-credits"
-question = "What uptime do you commit to, and what do we get back when you miss it?"
-tags = ["multi-document"]
+id = "two-factor-plans-price"
+question = "Which plans let us force two-factor authentication for every agent, and what does the cheaper of them cost per seat on a yearly plan?"
+tags = ["multi-document", "security", "plans"]
 [cases.expect]
-sources = ["plans-and-pricing.md", "support-sla.md"]
-evidence_any = ["10%"]
+sources = ["policies/account-security.txt", "plans-and-pricing.md"]
+evidence_any = ["15 EUR"]
 
 [[cases]]
 id = "pt-medium-priority-pro"
