@@ -1,0 +1,22 @@
+ACCOUNT SECURITY
+
+Two-factor authentication
+Every agent can turn on two-factor authentication with an authenticator app. Workspace owners
+on Pro and Enterprise can make it mandatory for all agents in the workspace settings.
+
+Single sign-on
+Enterprise workspaces can sign in with SAML single sign-on (for example Microsoft Entra ID or
+Okta). When single sign-on is enforced, password login is disabled for every agent except the
+workspace owner, who keeps a recovery login.
+
+Password reset
+Agents reset their own password from the login page; the link in the email expires after
+60 minutes. Tessera staff never ask for a password, by email, chat or phone.
+
+Locked accounts
+After 10 failed login attempts in 15 minutes the account is locked for 30 minutes. A
+workspace owner can unlock it earlier from the agent list.
+
+Reporting a vulnerability
+Security problems are reported to the security team through the form on the trust page, not
+through a support ticket.

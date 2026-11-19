@@ -1,0 +1,158 @@
+# Retrieval eval dataset over samples/knowledge-base (Tessera Support Cloud, fictional).
+#
+# Changelog (bump `version` whenever a case or an expectation changes):
+#   v1  18 cases: plans, SLA, ticket lifecycle, refunds, privacy, security, one question
+#       needing two documents, three questions in Portuguese.
+#
+# Questions are paraphrases: they avoid the words of the answer where a user would, so a
+# lexical match is not enough. `evidence_any` is text the retrieved chunk must contain.
+
+name = "knowledge_base"
+version = 1
+description = "Can the index find the help-centre article (and the passage) that answers a support question?"
+corpus = "make ingest-samples (samples/knowledge-base)"
+k = 5
+
+[[cases]]
+id = "pro-annual-price"
+question = "How much does one Pro seat cost if we pay yearly?"
+tags = ["plans"]
+[cases.expect]
+sources = ["plans-and-pricing.md"]
+evidence_any = ["15 EUR"]
+
+[[cases]]
+id = "free-seat-limit"
+question = "What is the maximum number of agents on the free tier?"
+tags = ["plans"]
+[cases.expect]
+sources = ["plans-and-pricing.md"]
+evidence_any = ["Up to 3 agent seats"]
+
+[[cases]]
+id = "seat-removal"
+question = "If we drop some seats in the middle of a yearly contract, do we pay less straight away?"
+tags = ["plans", "paraphrase"]
+[cases.expect]
+sources = ["plans-and-pricing.md"]
+evidence_any = ["only reduces the bill at renewal"]
+
+[[cases]]
+id = "corporate-login"
+question = "Can our agents sign in with the company identity provider instead of passwords?"
+tags = ["security", "paraphrase"]
+[cases.expect]
+sources = ["policies/account-security.txt"]
+evidence_any = ["SAML"]
+
+[[cases]]
+id = "locked-account"
+question = "An agent typed the wrong password too many times and cannot get in. What now?"
+tags = ["security", "paraphrase"]
+[cases.expect]
+sources = ["policies/account-security.txt"]
+evidence_any = ["locked for 30 minutes"]
+
+[[cases]]
+id = "urgent-enterprise-response"
+question = "How quickly do you answer an urgent ticket from an enterprise customer?"
+tags = ["sla"]
+[cases.expect]
+sources = ["support-sla.md"]
+evidence_any = ["1 hour"]
+
+[[cases]]
+id = "support-hours"
+question = "At what times of day is your support team working?"
+tags = ["sla", "paraphrase"]
+[cases.expect]
+sources = ["support-sla.md"]
+evidence_any = ["08:00 to 18:00"]
+
+[[cases]]
+id = "no-answer-escalation"
+question = "Nobody replied to our critical ticket in time. How do we get attention?"
+tags = ["sla", "paraphrase"]
+[cases.expect]
+sources = ["support-sla.md"]
+evidence_any = ["ESCALATE"]
+
+[[cases]]
+id = "auto-close"
+question = "When does a solved ticket get closed automatically?"
+tags = ["tickets"]
+[cases.expect]
+sources = ["ticket-lifecycle.md"]
+evidence_any = ["7 days"]
+
+[[cases]]
+id = "reopen-closed"
+question = "Can a customer reopen a ticket that is already closed?"
+tags = ["tickets"]
+[cases.expect]
+sources = ["ticket-lifecycle.md"]
+evidence_any = ["cannot be reopened"]
+
+[[cases]]
+id = "refund-annual"
+question = "We bought a yearly plan two weeks ago. Can we still get our money back?"
+tags = ["refunds", "paraphrase"]
+[cases.expect]
+sources = ["refund-policy.md"]
+evidence_any = ["within 30 days"]
+
+[[cases]]
+id = "refund-monthly"
+question = "Do you give refunds for monthly subscriptions?"
+tags = ["refunds"]
+[cases.expect]
+sources = ["refund-policy.md"]
+evidence_any = ["not refunded"]
+
+[[cases]]
+id = "data-location"
+question = "In which region is our customers' data hosted?"
+tags = ["privacy"]
+[cases.expect]
+sources = ["policies/data-retention-and-privacy.md"]
+evidence_any = ["European Union"]
+
+[[cases]]
+id = "erasure-request"
+question = "How long do you take to remove everything you hold about one of our end users?"
+tags = ["privacy", "paraphrase"]
+[cases.expect]
+sources = ["policies/data-retention-and-privacy.md"]
+evidence_any = ["within 30 days"]
+
+[[cases]]
+id = "cancelled-workspace"
+question = "What happens to our tickets after we cancel the account?"
+tags = ["privacy", "paraphrase"]
+[cases.expect]
+sources = ["policies/data-retention-and-privacy.md"]
+evidence_any = ["60 days"]
+
+[[cases]]
+id = "uptime-and-credits"
+question = "What uptime do you commit to, and what do we get back when you miss it?"
+tags = ["multi-document"]
+[cases.expect]
+sources = ["plans-and-pricing.md", "support-sla.md"]
+evidence_any = ["10%"]
+
+[[cases]]
+id = "pt-medium-priority-pro"
+question = "Quanto tempo demora a primeira resposta a um ticket de prioridade média no plano Pro?"
+tags = ["sla", "portuguese"]
+[cases.expect]
+sources = ["support-sla.md"]
+evidence_any = ["1 business day"]
+
+[[cases]]
+id = "pt-monthly-refund"
+question = "Posso pedir o reembolso de uma subscrição mensal?"
+tags = ["refunds", "portuguese"]
+[cases.expect]
+sources = ["refund-policy.md"]
+evidence_any = ["not refunded"]

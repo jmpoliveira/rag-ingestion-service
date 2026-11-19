@@ -1,0 +1,19 @@
+# Override for the shared docker-env stack (network docker-env-net). Start docker-env with the
+# llm, vector and observability profiles, then:
+#   docker compose -f docker-compose.yml -f docker-compose.docker-env.yml run --rm --build ingestion
+# Traces go to the collector (the single OTLP entry point), which sends them to Jaeger and Phoenix.
+services:
+  ingestion:
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      CHROMA_HOST: chromadb
+      CHROMA_PORT: "8000"
+      OTEL_ENABLED: "true"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+    networks:
+      - shared
+
+networks:
+  shared:
+    name: docker-env-net
+    external: true # created by the docker-env project, not by this one

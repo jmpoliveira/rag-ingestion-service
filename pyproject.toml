@@ -1,0 +1,116 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-ingestion-service"
+version = "0.1.0"
+description = "Incremental, idempotent document ingestion for RAG: parse, chunk, embed and index into ChromaDB, traced with OpenTelemetry and measured with retrieval evals."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "jmpoliveira" }]
+dependencies = [
+  "pydantic-settings>=2.16,<3",
+  "httpx>=0.28,<1",
+  # Parsing and chunking
+  "pypdf>=7.1,<8",
+  "langchain-core>=1.8,<2",
+  "langchain-text-splitters>=1.1,<2",
+  # Embeddings: official LangChain partner package, plus the SDK whose errors we handle
+  "langchain-ollama>=1.1,<2",
+  "ollama>=0.6,<1",
+  # Vector store: the HTTP client only (no server, no local embedding models). Same major
+  # as the chromadb server in docker-env.
+  "chromadb-client>=1.5,<2",
+  # Observability
+  "opentelemetry-api>=1.45,<2",
+  "opentelemetry-sdk>=1.45,<2",
+  "opentelemetry-exporter-otlp-proto-http>=1.45,<2",
+]
+
+[project.urls]
+Repository = "https://github.com/jmpoliveira/rag-ingestion-service"
+Issues = "https://github.com/jmpoliveira/rag-ingestion-service/issues"
+
+[project.optional-dependencies]
+# Only for `python -m evals publish` (ADR 0005): never imported by the service or the image.
+evals = [
+  "arize-phoenix-client>=3.7,<4",
+]
+dev = [
+  "rag-ingestion-service[evals]",
+  "pytest>=9,<10",
+  "pytest-asyncio>=1.4,<2",
+  "pytest-cov>=7,<8",
+  "ruff>=0.17,<1",
+  "pyright>=1.1.414,<2",
+]
+
+[tool.setuptools.packages.find]
+include = ["src*", "config*"]
+
+# Read at runtime through importlib.resources; without this the wheel (and the image) misses it.
+[tool.setuptools.package-data]
+config = ["logging.json"]
+
+# ---------------------------------------------------------------------------------------
+# pytest
+# ---------------------------------------------------------------------------------------
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers"
+markers = [
+  "live: needs the real Ollama and Chroma from .env; skipped unless pytest runs with --live",
+]
+
+[tool.coverage.run]
+source = ["src", "config", "evals"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+
+# ---------------------------------------------------------------------------------------
+# ruff
+# ---------------------------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W",  # pycodestyle + pyflakes
+  "I",            # import sorting
+  "B",            # bugbear
+  "UP",           # pyupgrade
+  "ASYNC",        # async best practices
+  "S",            # security (bandit)
+  "BLE",          # blind except
+  "C4",           # comprehensions
+  "SIM",          # simplifications
+  "PT",           # pytest style
+  "RUF",          # ruff-specific
+  "PLW",          # pylint warnings (global statement...)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]  # assert and dummy secrets are fine in tests
+
+[tool.ruff.format]
+quote-style = "double"
+
+# ---------------------------------------------------------------------------------------
+# pyright
+# ---------------------------------------------------------------------------------------
+[tool.pyright]
+include = ["src", "config", "main.py", "evals", "tests"]
+venvPath = "."
+venv = ".venv"
+pythonVersion = "3.12"
+typeCheckingMode = "strict"

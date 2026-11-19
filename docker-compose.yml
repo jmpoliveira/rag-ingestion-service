@@ -1,0 +1,95 @@
+# The ingestion job is a one-shot container: it syncs the mounted folder and exits.
+#
+# Standalone (its own Ollama, Chroma and Jaeger):
+#   docker compose --profile standalone run --rm --build ingestion              (make up)
+# On the shared docker-env network (start docker-env first):
+#   docker compose -f docker-compose.yml -f docker-compose.docker-env.yml run --rm --build ingestion
+#                                                                                (make up-env)
+# Ingest another folder: HOST_SOURCE_DIR=/path/to/docs make up-env
+name: rag-ingestion-service
+
+services:
+  ingestion:
+    build:
+      context: .
+    image: rag-ingestion-service:latest
+    env_file:
+      - path: .env # collection, chunking, model...
+        required: false
+    environment: # overrides .env: inside the stack, services are reached by name
+      APP_ENV: ${APP_ENV:-development}
+      SOURCE_DIR: /data
+      OLLAMA_BASE_URL: http://ollama:11434
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+      CHROMA_HOST: chromadb
+      CHROMA_PORT: "8000"
+      OTEL_ENABLED: "true"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+    volumes:
+      - ${HOST_SOURCE_DIR:-./samples/knowledge-base}:/data:ro # documents are only read
+    depends_on:
+      # required: false lets the job start without these services (docker-env mode).
+      ollama-pull:
+        condition: service_completed_successfully
+        required: false
+      chromadb:
+        condition: service_started
+        required: false
+      jaeger:
+        condition: service_started
+        required: false
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+
+  ollama:
+    image: ollama/ollama:0.40.15
+    profiles: [standalone]
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # Downloads the embedding model before the job starts. Fast once cached.
+  ollama-pull:
+    image: ollama/ollama:0.40.15
+    profiles: [standalone]
+    entrypoint: ["ollama", "pull", "${EMBEDDING_MODEL:-nomic-embed-text}"]
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: "no"
+
+  chromadb:
+    image: chromadb/chroma:1.5.9
+    profiles: [standalone]
+    environment:
+      ANONYMIZED_TELEMETRY: "false"
+    ports:
+      - "127.0.0.1:8001:8000"
+    volumes:
+      - chroma-data:/data
+    restart: unless-stopped
+
+  jaeger:
+    image: jaegertracing/jaeger:2.23.0
+    profiles: [standalone]
+    # Jaeger v2 binds OTLP to localhost by default, unreachable from other containers.
+    command:
+      - --set=receivers.otlp.protocols.http.endpoint=0.0.0.0:4318
+    ports:
+      - "127.0.0.1:16686:16686" # UI
+    restart: unless-stopped
+
+volumes:
+  ollama-models:
+  chroma-data:
