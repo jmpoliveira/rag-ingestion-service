@@ -1,0 +1,1368 @@
+{
+  "meta": {
+    "dataset": "knowledge_base",
+    "dataset_version": 2,
+    "dataset_fingerprint": "08ef1ebd1497",
+    "k": 5,
+    "collection": "tessera-kb",
+    "embedding_provider": "ollama",
+    "embedding_model": "nomic-embed-text",
+    "document_prefix": "",
+    "query_prefix": "",
+    "distance": "cosine",
+    "pipeline_fingerprint": "recursive:1000:200;clean=v1",
+    "git_commit": "181b4b2df4cb6894e496ae92b1f178094217c92c",
+    "git_dirty": false,
+    "cases": 18,
+    "started_at": "2026-11-19T17:33:33+00:00",
+    "duration_seconds": 0.9
+  },
+  "summary": {
+    "cases": 18,
+    "pass_rate": 1.0,
+    "hit_rate": 1.0,
+    "mrr": 0.8888888888888888,
+    "mean_recall": 1.0,
+    "evidence_rate": 1.0,
+    "mean_latency_seconds": 0.036858198221933786,
+    "per_tag": {
+      "multi-document": {
+        "cases": 1.0,
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      },
+      "paraphrase": {
+        "cases": 8.0,
+        "hit_rate": 1.0,
+        "mrr": 0.84375
+      },
+      "plans": {
+        "cases": 4.0,
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      },
+      "portuguese": {
+        "cases": 2.0,
+        "hit_rate": 1.0,
+        "mrr": 0.625
+      },
+      "privacy": {
+        "cases": 3.0,
+        "hit_rate": 1.0,
+        "mrr": 0.75
+      },
+      "refunds": {
+        "cases": 3.0,
+        "hit_rate": 1.0,
+        "mrr": 0.75
+      },
+      "security": {
+        "cases": 3.0,
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      },
+      "sla": {
+        "cases": 4.0,
+        "hit_rate": 1.0,
+        "mrr": 0.875
+      },
+      "tickets": {
+        "cases": 2.0,
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    }
+  },
+  "records": [
+    {
+      "case_id": "pro-annual-price",
+      "question": "How much does one Pro seat cost if we pay yearly?",
+      "tags": [
+        "plans"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['plans-and-pricing.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.3958249
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.4208204
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:1",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "## Changing plan\n\nUpgrades take effect immediately and are prorated. Downgrades take effect at the end of the\ncurrent billing period. Seats can be added at any time; removing seats on an annual plan\nonly reduces the bill at renewal.",
+          "distance": 0.4887572
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.5379604
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:0",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "# Data retention and privacy\n\n## Where data is stored\n\nWorkspaces are hosted in the European Union by default (Frankfurt and Dublin). Enterprise\ncustomers can require that all data, including backups, stays in the EU.\n\n## Retention\n\nTicket history is kept for 30 days on Free and 2 years on Pro. Enterprise customers choose a\nretention period between 1 and 10 years. Attachments follow the same retention as their\nticket. Backups are kept for 35 days and then overwritten.\n\n## Deleting data\n\nThe workspace owner can delete a single ticket at any time. A request to delete all personal\ndata about one end customer (a right-to-erasure request under the GDPR) is completed within\n30 days, including backups as they expire.\n\nWhen a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors",
+          "distance": 0.5584303
+        }
+      ],
+      "latency_seconds": 0.0548,
+      "started_at": "2026-11-19T17:33:34.133639+00:00",
+      "trace_id": "7fde4fddc00573a5a94bd679c941881f"
+    },
+    {
+      "case_id": "free-seat-limit",
+      "question": "What is the maximum number of agents on the free tier?",
+      "tags": [
+        "plans"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['plans-and-pricing.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.40273416
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.42961633
+        },
+        {
+          "chunk_id": "22ea9c400eef9cfc:1f765e06bf731de0:0",
+          "document_id": "policies/account-security.txt",
+          "page": 1,
+          "text": "ACCOUNT SECURITY\n\nTwo-factor authentication\nEvery agent can turn on two-factor authentication with an authenticator app. Workspace owners\non Pro and Enterprise can make it mandatory for all agents in the workspace settings.\n\nSingle sign-on\nEnterprise workspaces can sign in with SAML single sign-on (for example Microsoft Entra ID or\nOkta). When single sign-on is enforced, password login is disabled for every agent except the\nworkspace owner, who keeps a recovery login.\n\nPassword reset\nAgents reset their own password from the login page; the link in the email expires after\n60 minutes. Tessera staff never ask for a password, by email, chat or phone.\n\nLocked accounts\nAfter 10 failed login attempts in 15 minutes the account is locked for 30 minutes. A\nworkspace owner can unlock it earlier from the agent list.\n\nReporting a vulnerability\nSecurity problems are reported to the security team through the form on the trust page, not\nthrough a support ticket.",
+          "distance": 0.44915485
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.44944966
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.4679273
+        }
+      ],
+      "latency_seconds": 0.0345,
+      "started_at": "2026-11-19T17:33:34.188503+00:00",
+      "trace_id": "e944c0788e60a886a8c3b213924fa493"
+    },
+    {
+      "case_id": "seat-removal",
+      "question": "If we drop some seats in the middle of a yearly contract, do we pay less straight away?",
+      "tags": [
+        "plans",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['plans-and-pricing.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:1",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "## Changing plan\n\nUpgrades take effect immediately and are prorated. Downgrades take effect at the end of the\ncurrent billing period. Seats can be added at any time; removing seats on an annual plan\nonly reduces the bill at renewal.",
+          "distance": 0.34851837
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.42463908
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.44470948
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.4507395
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.45165175
+        }
+      ],
+      "latency_seconds": 0.0477,
+      "started_at": "2026-11-19T17:33:34.223085+00:00",
+      "trace_id": "22de8cb8bf415c9ebf5e77cb664b0aad"
+    },
+    {
+      "case_id": "corporate-login",
+      "question": "Can our agents sign in with the company identity provider instead of passwords?",
+      "tags": [
+        "security",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['policies/account-security.txt']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "22ea9c400eef9cfc:1f765e06bf731de0:0",
+          "document_id": "policies/account-security.txt",
+          "page": 1,
+          "text": "ACCOUNT SECURITY\n\nTwo-factor authentication\nEvery agent can turn on two-factor authentication with an authenticator app. Workspace owners\non Pro and Enterprise can make it mandatory for all agents in the workspace settings.\n\nSingle sign-on\nEnterprise workspaces can sign in with SAML single sign-on (for example Microsoft Entra ID or\nOkta). When single sign-on is enforced, password login is disabled for every agent except the\nworkspace owner, who keeps a recovery login.\n\nPassword reset\nAgents reset their own password from the login page; the link in the email expires after\n60 minutes. Tessera staff never ask for a password, by email, chat or phone.\n\nLocked accounts\nAfter 10 failed login attempts in 15 minutes the account is locked for 30 minutes. A\nworkspace owner can unlock it earlier from the agent list.\n\nReporting a vulnerability\nSecurity problems are reported to the security team through the form on the trust page, not\nthrough a support ticket.",
+          "distance": 0.32143554
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.4891642
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:0",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "# Data retention and privacy\n\n## Where data is stored\n\nWorkspaces are hosted in the European Union by default (Frankfurt and Dublin). Enterprise\ncustomers can require that all data, including backups, stays in the EU.\n\n## Retention\n\nTicket history is kept for 30 days on Free and 2 years on Pro. Enterprise customers choose a\nretention period between 1 and 10 years. Attachments follow the same retention as their\nticket. Backups are kept for 35 days and then overwritten.\n\n## Deleting data\n\nThe workspace owner can delete a single ticket at any time. A request to delete all personal\ndata about one end customer (a right-to-erasure request under the GDPR) is completed within\n30 days, including backups as they expire.\n\nWhen a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors",
+          "distance": 0.50792223
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.5333384
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.54303586
+        }
+      ],
+      "latency_seconds": 0.0342,
+      "started_at": "2026-11-19T17:33:34.270891+00:00",
+      "trace_id": "fa9986e2ad4dd963d45dc18e1b1d0142"
+    },
+    {
+      "case_id": "locked-account",
+      "question": "An agent typed the wrong password too many times and cannot get in. What now?",
+      "tags": [
+        "security",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['policies/account-security.txt']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "22ea9c400eef9cfc:1f765e06bf731de0:0",
+          "document_id": "policies/account-security.txt",
+          "page": 1,
+          "text": "ACCOUNT SECURITY\n\nTwo-factor authentication\nEvery agent can turn on two-factor authentication with an authenticator app. Workspace owners\non Pro and Enterprise can make it mandatory for all agents in the workspace settings.\n\nSingle sign-on\nEnterprise workspaces can sign in with SAML single sign-on (for example Microsoft Entra ID or\nOkta). When single sign-on is enforced, password login is disabled for every agent except the\nworkspace owner, who keeps a recovery login.\n\nPassword reset\nAgents reset their own password from the login page; the link in the email expires after\n60 minutes. Tessera staff never ask for a password, by email, chat or phone.\n\nLocked accounts\nAfter 10 failed login attempts in 15 minutes the account is locked for 30 minutes. A\nworkspace owner can unlock it earlier from the agent list.\n\nReporting a vulnerability\nSecurity problems are reported to the security team through the form on the trust page, not\nthrough a support ticket.",
+          "distance": 0.31149402
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.49430948
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.51055765
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.5364588
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.5377797
+        }
+      ],
+      "latency_seconds": 0.0392,
+      "started_at": "2026-11-19T17:33:34.305143+00:00",
+      "trace_id": "367e2729c2f94864467e1c7521a860b7"
+    },
+    {
+      "case_id": "urgent-enterprise-response",
+      "question": "How quickly do you answer an urgent ticket from an enterprise customer?",
+      "tags": [
+        "sla"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['support-sla.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.31315178
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.3807277
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.42212126
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.4305749
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.43111458
+        }
+      ],
+      "latency_seconds": 0.0318,
+      "started_at": "2026-11-19T17:33:34.344442+00:00",
+      "trace_id": "1c7538aec8c6ad4dfc05d2cc332046a7"
+    },
+    {
+      "case_id": "support-hours",
+      "question": "At what times of day is your support team working?",
+      "tags": [
+        "sla",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['support-sla.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.3041072
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.42137387
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.4319623
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.44109154
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.47934914
+        }
+      ],
+      "latency_seconds": 0.0332,
+      "started_at": "2026-11-19T17:33:34.376346+00:00",
+      "trace_id": "8e7492cede0cb1986d9454654c7b049d"
+    },
+    {
+      "case_id": "no-answer-escalation",
+      "question": "Nobody replied to our critical ticket in time. How do we get attention?",
+      "tags": [
+        "sla",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 0.5,
+        "recall": 1.0,
+        "first_relevant_rank": 2
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 2"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['support-sla.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 2"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.3497443
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.3502493
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.45497635
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.47505724
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.49336013
+        }
+      ],
+      "latency_seconds": 0.0328,
+      "started_at": "2026-11-19T17:33:34.409634+00:00",
+      "trace_id": "249f6942fb6e7a695be00b95544cc04a"
+    },
+    {
+      "case_id": "auto-close",
+      "question": "When does a solved ticket get closed automatically?",
+      "tags": [
+        "tickets"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['ticket-lifecycle.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.25682122
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.33513033
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.41922367
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.4404447
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.48932195
+        }
+      ],
+      "latency_seconds": 0.0294,
+      "started_at": "2026-11-19T17:33:34.442545+00:00",
+      "trace_id": "24c1fe0c83e01933402e2eb413688a37"
+    },
+    {
+      "case_id": "reopen-closed",
+      "question": "Can a customer reopen a ticket that is already closed?",
+      "tags": [
+        "tickets"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['ticket-lifecycle.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 2"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.27366397
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.2958953
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.4479472
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:1",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "## Changing plan\n\nUpgrades take effect immediately and are prorated. Downgrades take effect at the end of the\ncurrent billing period. Seats can be added at any time; removing seats on an annual plan\nonly reduces the bill at renewal.",
+          "distance": 0.4603838
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.47899395
+        }
+      ],
+      "latency_seconds": 0.0322,
+      "started_at": "2026-11-19T17:33:34.472003+00:00",
+      "trace_id": "362b15a42aa189d3a7ac80f90322d471"
+    },
+    {
+      "case_id": "refund-annual",
+      "question": "We bought a yearly plan two weeks ago. Can we still get our money back?",
+      "tags": [
+        "refunds",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['refund-policy.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.38921642
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:1",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "## Changing plan\n\nUpgrades take effect immediately and are prorated. Downgrades take effect at the end of the\ncurrent billing period. Seats can be added at any time; removing seats on an annual plan\nonly reduces the bill at renewal.",
+          "distance": 0.42048362
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.47956246
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.49270844
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:0",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "# Data retention and privacy\n\n## Where data is stored\n\nWorkspaces are hosted in the European Union by default (Frankfurt and Dublin). Enterprise\ncustomers can require that all data, including backups, stays in the EU.\n\n## Retention\n\nTicket history is kept for 30 days on Free and 2 years on Pro. Enterprise customers choose a\nretention period between 1 and 10 years. Attachments follow the same retention as their\nticket. Backups are kept for 35 days and then overwritten.\n\n## Deleting data\n\nThe workspace owner can delete a single ticket at any time. A request to delete all personal\ndata about one end customer (a right-to-erasure request under the GDPR) is completed within\n30 days, including backups as they expire.\n\nWhen a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors",
+          "distance": 0.50196975
+        }
+      ],
+      "latency_seconds": 0.0351,
+      "started_at": "2026-11-19T17:33:34.504284+00:00",
+      "trace_id": "cdb93398f884bd008de3c9ab6f924269"
+    },
+    {
+      "case_id": "refund-monthly",
+      "question": "Do you give refunds for monthly subscriptions?",
+      "tags": [
+        "refunds"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['refund-policy.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.26991647
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.41174316
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:1",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "## Changing plan\n\nUpgrades take effect immediately and are prorated. Downgrades take effect at the end of the\ncurrent billing period. Seats can be added at any time; removing seats on an annual plan\nonly reduces the bill at renewal.",
+          "distance": 0.4736995
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.5176467
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.5184114
+        }
+      ],
+      "latency_seconds": 0.0304,
+      "started_at": "2026-11-19T17:33:34.539433+00:00",
+      "trace_id": "991c49b7e45148c1c2c23d6441c570e0"
+    },
+    {
+      "case_id": "data-location",
+      "question": "In which region is our customers' data hosted?",
+      "tags": [
+        "privacy"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['policies/data-retention-and-privacy.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:0",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "# Data retention and privacy\n\n## Where data is stored\n\nWorkspaces are hosted in the European Union by default (Frankfurt and Dublin). Enterprise\ncustomers can require that all data, including backups, stays in the EU.\n\n## Retention\n\nTicket history is kept for 30 days on Free and 2 years on Pro. Enterprise customers choose a\nretention period between 1 and 10 years. Attachments follow the same retention as their\nticket. Backups are kept for 35 days and then overwritten.\n\n## Deleting data\n\nThe workspace owner can delete a single ticket at any time. A request to delete all personal\ndata about one end customer (a right-to-erasure request under the GDPR) is completed within\n30 days, including backups as they expire.\n\nWhen a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors",
+          "distance": 0.41057688
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.4215277
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.4353813
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.4381779
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.46124476
+        }
+      ],
+      "latency_seconds": 0.0296,
+      "started_at": "2026-11-19T17:33:34.569899+00:00",
+      "trace_id": "bb5e4b4cac9ca9e44a3b407a27def43f"
+    },
+    {
+      "case_id": "erasure-request",
+      "question": "How long do you take to remove everything you hold about one of our end users?",
+      "tags": [
+        "privacy",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['policies/data-retention-and-privacy.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 2"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.3789274
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:0",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "# Data retention and privacy\n\n## Where data is stored\n\nWorkspaces are hosted in the European Union by default (Frankfurt and Dublin). Enterprise\ncustomers can require that all data, including backups, stays in the EU.\n\n## Retention\n\nTicket history is kept for 30 days on Free and 2 years on Pro. Enterprise customers choose a\nretention period between 1 and 10 years. Attachments follow the same retention as their\nticket. Backups are kept for 35 days and then overwritten.\n\n## Deleting data\n\nThe workspace owner can delete a single ticket at any time. A request to delete all personal\ndata about one end customer (a right-to-erasure request under the GDPR) is completed within\n30 days, including backups as they expire.\n\nWhen a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors",
+          "distance": 0.38840997
+        },
+        {
+          "chunk_id": "22ea9c400eef9cfc:1f765e06bf731de0:0",
+          "document_id": "policies/account-security.txt",
+          "page": 1,
+          "text": "ACCOUNT SECURITY\n\nTwo-factor authentication\nEvery agent can turn on two-factor authentication with an authenticator app. Workspace owners\non Pro and Enterprise can make it mandatory for all agents in the workspace settings.\n\nSingle sign-on\nEnterprise workspaces can sign in with SAML single sign-on (for example Microsoft Entra ID or\nOkta). When single sign-on is enforced, password login is disabled for every agent except the\nworkspace owner, who keeps a recovery login.\n\nPassword reset\nAgents reset their own password from the login page; the link in the email expires after\n60 minutes. Tessera staff never ask for a password, by email, chat or phone.\n\nLocked accounts\nAfter 10 failed login attempts in 15 minutes the account is locked for 30 minutes. A\nworkspace owner can unlock it earlier from the agent list.\n\nReporting a vulnerability\nSecurity problems are reported to the security team through the form on the trust page, not\nthrough a support ticket.",
+          "distance": 0.45734453
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.46685857
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.5233596
+        }
+      ],
+      "latency_seconds": 0.0377,
+      "started_at": "2026-11-19T17:33:34.599584+00:00",
+      "trace_id": "267c5859826770ea74d4bf7baf57b9b4"
+    },
+    {
+      "case_id": "cancelled-workspace",
+      "question": "What happens to our tickets after we cancel the account?",
+      "tags": [
+        "privacy",
+        "paraphrase"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 0.25,
+        "recall": 1.0,
+        "first_relevant_rank": 4
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 4"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['policies/data-retention-and-privacy.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 4"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.37298712
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.39729923
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.429798
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:0",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "# Data retention and privacy\n\n## Where data is stored\n\nWorkspaces are hosted in the European Union by default (Frankfurt and Dublin). Enterprise\ncustomers can require that all data, including backups, stays in the EU.\n\n## Retention\n\nTicket history is kept for 30 days on Free and 2 years on Pro. Enterprise customers choose a\nretention period between 1 and 10 years. Attachments follow the same retention as their\nticket. Backups are kept for 35 days and then overwritten.\n\n## Deleting data\n\nThe workspace owner can delete a single ticket at any time. A request to delete all personal\ndata about one end customer (a right-to-erasure request under the GDPR) is completed within\n30 days, including backups as they expire.\n\nWhen a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors",
+          "distance": 0.44668388
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.45245513
+        }
+      ],
+      "latency_seconds": 0.0292,
+      "started_at": "2026-11-19T17:33:34.637339+00:00",
+      "trace_id": "7e8e7ba32ca4e3a31d4e697dd1715e16"
+    },
+    {
+      "case_id": "two-factor-plans-price",
+      "question": "Which plans let us force two-factor authentication for every agent, and what does the cheaper of them cost per seat on a yearly plan?",
+      "tags": [
+        "multi-document",
+        "security",
+        "plans"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['plans-and-pricing.md', 'policies/account-security.txt']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 2"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "22ea9c400eef9cfc:1f765e06bf731de0:0",
+          "document_id": "policies/account-security.txt",
+          "page": 1,
+          "text": "ACCOUNT SECURITY\n\nTwo-factor authentication\nEvery agent can turn on two-factor authentication with an authenticator app. Workspace owners\non Pro and Enterprise can make it mandatory for all agents in the workspace settings.\n\nSingle sign-on\nEnterprise workspaces can sign in with SAML single sign-on (for example Microsoft Entra ID or\nOkta). When single sign-on is enforced, password login is disabled for every agent except the\nworkspace owner, who keeps a recovery login.\n\nPassword reset\nAgents reset their own password from the login page; the link in the email expires after\n60 minutes. Tessera staff never ask for a password, by email, chat or phone.\n\nLocked accounts\nAfter 10 failed login attempts in 15 minutes the account is locked for 30 minutes. A\nworkspace owner can unlock it earlier from the agent list.\n\nReporting a vulnerability\nSecurity problems are reported to the security team through the form on the trust page, not\nthrough a support ticket.",
+          "distance": 0.2960744
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.31775934
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:1",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "## Changing plan\n\nUpgrades take effect immediately and are prorated. Downgrades take effect at the end of the\ncurrent billing period. Seats can be added at any time; removing seats on an annual plan\nonly reduces the bill at renewal.",
+          "distance": 0.3920619
+        },
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:0",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "# Data retention and privacy\n\n## Where data is stored\n\nWorkspaces are hosted in the European Union by default (Frankfurt and Dublin). Enterprise\ncustomers can require that all data, including backups, stays in the EU.\n\n## Retention\n\nTicket history is kept for 30 days on Free and 2 years on Pro. Enterprise customers choose a\nretention period between 1 and 10 years. Attachments follow the same retention as their\nticket. Backups are kept for 35 days and then overwritten.\n\n## Deleting data\n\nThe workspace owner can delete a single ticket at any time. A request to delete all personal\ndata about one end customer (a right-to-erasure request under the GDPR) is completed within\n30 days, including backups as they expire.\n\nWhen a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors",
+          "distance": 0.42872906
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.43107688
+        }
+      ],
+      "latency_seconds": 0.052,
+      "started_at": "2026-11-19T17:33:34.666642+00:00",
+      "trace_id": "d1f80b6d0f2565671a9ec797337c81b6"
+    },
+    {
+      "case_id": "pt-medium-priority-pro",
+      "question": "Quanto tempo demora a primeira resposta a um ticket de prioridade média no plano Pro?",
+      "tags": [
+        "sla",
+        "portuguese"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 1.0,
+        "recall": 1.0,
+        "first_relevant_rank": 1
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 1"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['support-sla.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 1"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.39522862
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:0",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "# Ticket lifecycle\n\nEvery ticket in Tessera has one of four statuses.\n\n- **open**: created and waiting for an agent.\n- **in_progress**: an agent is working on it. A ticket moves here automatically when an agent\nfirst replies.\n- **resolved**: the agent believes the problem is solved. The customer is notified and can\nreply to reopen the ticket.\n- **closed**: final. A closed ticket cannot be reopened; a new reply creates a follow-up\nticket linked to it.\n\n## Automatic transitions\n\nA resolved ticket closes automatically after 7 days without a customer reply. Replying to a\nresolved ticket within those 7 days moves it back to open, keeping its history and priority.\n\n## Priorities\n\nTickets have a priority of low, medium or high. Priority decides the response target (see\nthe SLA article) and the order of the agent queue; it does not change the workflow. Only\nagents can change a ticket's priority, and every change is recorded in the ticket history.\n\n## Merging tickets",
+          "distance": 0.41227904
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:0",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "# Plans and pricing\n\nTessera Support Cloud is sold in three plans. Prices are per agent seat.\n\n## Free\n\nFor teams trying the product. Up to 3 agent seats, email channel only, 1,000 tickets per\nmonth and 30 days of ticket history. Support is community-only: there is no response-time\ncommitment for Free workspaces.\n\n## Pro\n\nFor growing support teams. 19 EUR per seat per month on the monthly plan, or 15 EUR per seat\nper month when billed annually. Includes email, chat and web forms, unlimited tickets,\nautomations, and 2 years of ticket history. Pro customers get email support from our team\nduring business hours.\n\n## Enterprise\n\nFor organisations with compliance needs. Priced by contract, with a minimum of 25 seats.\nIncludes everything in Pro, plus single sign-on (SAML), audit logs, data residency in the EU,\na 99.9% uptime commitment and a named customer success manager. Enterprise support is\navailable 24 hours a day, 7 days a week for high-priority tickets.\n\n## Changing plan",
+          "distance": 0.4598316
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.4766132
+        },
+        {
+          "chunk_id": "ed026a8e09f7cec7:4ee87081026dc1a5:1",
+          "document_id": "plans-and-pricing.md",
+          "page": 1,
+          "text": "## Changing plan\n\nUpgrades take effect immediately and are prorated. Downgrades take effect at the end of the\ncurrent billing period. Seats can be added at any time; removing seats on an annual plan\nonly reduces the bill at renewal.",
+          "distance": 0.48185033
+        }
+      ],
+      "latency_seconds": 0.0418,
+      "started_at": "2026-11-19T17:33:34.718752+00:00",
+      "trace_id": "ca54a328179bd6f0537db08ff42fff72"
+    },
+    {
+      "case_id": "pt-monthly-refund",
+      "question": "Posso pedir o reembolso de uma subscrição mensal?",
+      "tags": [
+        "refunds",
+        "portuguese"
+      ],
+      "passed": true,
+      "scores": {
+        "hit": true,
+        "reciprocal_rank": 0.25,
+        "recall": 1.0,
+        "first_relevant_rank": 4
+      },
+      "checks": [
+        {
+          "name": "hit@5",
+          "passed": true,
+          "detail": "first relevant at rank 4"
+        },
+        {
+          "name": "recall@5",
+          "passed": true,
+          "detail": "found 100% of ['refund-policy.md']"
+        },
+        {
+          "name": "evidence",
+          "passed": true,
+          "detail": "answer text in the chunk at rank 4"
+        }
+      ],
+      "hits": [
+        {
+          "chunk_id": "b6d9090480dff50b:b3ec8f3b93d93a46:1",
+          "document_id": "policies/data-retention-and-privacy.md",
+          "page": 1,
+          "text": "When a workspace is cancelled, its data is kept for 60 days so that it can be reactivated,\nand then permanently deleted.\n\n## Sub-processors\n\nThe list of sub-processors (hosting, email delivery, payments) is published on the trust\npage. Customers are notified 30 days before a new sub-processor is added.",
+          "distance": 0.52151865
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:1",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "## Service credits\n\nWhen monthly uptime falls below the 99.9% commitment, Enterprise customers receive a\nservice credit of 10% of the monthly fee for each full 0.1% below the target, up to 50%.\nCredits must be requested within 30 days of the end of the affected month.",
+          "distance": 0.55502844
+        },
+        {
+          "chunk_id": "85cce9a3c8e08005:b75acb2f2b3daf84:0",
+          "document_id": "support-sla.md",
+          "page": 1,
+          "text": "# Support response times (SLA)\n\nThese are the first-response targets of the Tessera support team. They apply to tickets\nthat customers open with us, not to the tickets they handle in their own workspace.\n\n| Priority | Pro | Enterprise |\n|---|---|---|\n| High (service down, data at risk) | 8 business hours | 1 hour, around the clock |\n| Medium (a feature does not work) | 1 business day | 4 business hours |\n| Low (questions, how-to) | 3 business days | 1 business day |\n\nBusiness hours are 08:00 to 18:00 Lisbon time, Monday to Friday, excluding Portuguese public\nholidays. Free workspaces have no response target and are answered through the community\nforum.\n\n## Escalation\n\nIf a high-priority ticket has no answer within its target, reply to the ticket with the word\nESCALATE. It is then routed to the duty manager. Enterprise customers can also call their\ncustomer success manager directly.\n\n## Service credits",
+          "distance": 0.5726559
+        },
+        {
+          "chunk_id": "e0e7f178f9934dec:b17c700fe7acee23:0",
+          "document_id": "refund-policy.md",
+          "page": 1,
+          "text": "# Refund policy\n\n## Annual Pro subscriptions\n\nA new annual Pro subscription can be cancelled with a full refund within 30 days of the\npurchase date. After 30 days, annual subscriptions are not refundable, but the workspace\nstays on Pro until the end of the paid year.\n\n## Monthly Pro subscriptions\n\nMonthly subscriptions are not refunded. Cancelling stops the next renewal; the workspace\nkeeps Pro until the end of the month already paid.\n\n## Enterprise\n\nRefunds and credits for Enterprise customers follow their contract. Uptime-related service\ncredits are described in the SLA article.\n\n## How to request a refund\n\nThe workspace owner opens a ticket with the category Billing, stating the invoice number.\nRefunds go back to the original payment method within 10 business days of approval.",
+          "distance": 0.5837338
+        },
+        {
+          "chunk_id": "4238051f6de8b0b3:d63db755c1e27608:1",
+          "document_id": "ticket-lifecycle.md",
+          "page": 1,
+          "text": "## Merging tickets\n\nTwo tickets from the same customer about the same problem can be merged. The older ticket\nis kept, and the newer one is closed with a link to it.",
+          "distance": 0.6086155
+        }
+      ],
+      "latency_seconds": 0.0377,
+      "started_at": "2026-11-19T17:33:34.760575+00:00",
+      "trace_id": "1ca4a7a3e51f48f888bd27ded1c476c2"
+    }
+  ]
+}

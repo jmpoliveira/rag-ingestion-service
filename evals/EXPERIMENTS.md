@@ -48,6 +48,19 @@ Also noted: margins between rank 1 and rank 2 are often a few hundredths of a di
 rankings are right but fragile; with 1000-character chunks most documents are one or two
 chunks, so `evidence` is easy here (E2 will make it meaningful).
 
-**Baseline run, dataset v2**: to be recorded from the committed report in
-`evals/baselines/`. The 17 unchanged cases are deterministic and should repeat the numbers
-above; only `two-factor-plans-price` is new.
+**Baseline run, dataset v2** (commit `181b4b2`, clean tree; report
+`evals/baselines/20261119-173333-tessera-kb-knowledge_base.json`):
+
+| Metric | Value |
+|---|---|
+| pass rate | 18/18 (100%) |
+| hit@5 | 100% |
+| **MRR** | **0.889** |
+| recall@5 | 100% |
+| evidence | 100% |
+| latency per question | 0.04 s |
+
+The 17 unchanged cases repeated their v1 ranks exactly (retrieval is deterministic). The new
+`two-factor-plans-price` found both documents at ranks 1 and 2. The weak ranks are the targets
+of the next experiments: `cancelled-workspace` (4), `pt-monthly-refund` (4),
+`no-answer-escalation` (2). With every check passing, **MRR is the number E1 and E2 must beat**.
