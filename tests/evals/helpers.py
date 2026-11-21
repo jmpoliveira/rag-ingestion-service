@@ -15,16 +15,31 @@ from tests.fakes import FakeChunker, FakeEmbedder, FakeParser, FakeSource, InMem
 STARTED = datetime(2026, 11, 19, 12, 0, tzinfo=UTC)
 
 
-def dataset(*cases: dict[str, Any], k: int = 2, version: int = 1) -> Dataset:
+def dataset(
+    *cases: dict[str, Any],
+    k: int = 2,
+    version: int = 1,
+    forbidden_sources: list[str] | None = None,
+    forbidden_passages: list[dict[str, str]] | None = None,
+) -> Dataset:
     return Dataset.model_validate(
-        {"name": "kb", "version": version, "k": k, "corpus": "tests", "cases": list(cases)}
+        {
+            "name": "kb",
+            "version": version,
+            "k": k,
+            "corpus": "tests",
+            "forbidden_sources": forbidden_sources or [],
+            "forbidden_passages": forbidden_passages or [],
+            "cases": list(cases),
+        }
     )
 
 
 def case(case_id: str, question: str, sources: list[str], **extra: Any) -> dict[str, Any]:
     expect: dict[str, Any] = {"sources": sources}
-    if "evidence_any" in extra:
-        expect["evidence_any"] = extra.pop("evidence_any")
+    for key in ("evidence_any", "forbidden_sources"):
+        if key in extra:
+            expect[key] = extra.pop(key)
     return {"id": case_id, "question": question, "expect": expect, **extra}
 
 

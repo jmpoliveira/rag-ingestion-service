@@ -8,15 +8,40 @@
 #       its own (it states the 99.9% commitment and the credits), so expecting a second
 #       document punished a correct retrieval. The new case cannot be answered by one
 #       document: which plans can enforce 2FA (account-security) and their price (plans).
+#   v3  Corpus grown from 6 short articles to 17 documents, because on v2 hit@5 saturated (a
+#       top 5 was a quarter of the index): two long documents (admin guide, terms of
+#       service), a 9-page PDF (security whitepaper), distractors with overlapping words
+#       (release notes, API overview, onboarding), an archived refund policy that contradicts
+#       the current one, and three planted prompt-injection attacks (ADR 0007). 19 new cases;
+#       `forbidden_sources` (dataset and case level) measure contamination. Cases tagged
+#       `holdout` are never used to tune anything: they detect overfitting.
+#   v4  Contamination measured per chunk, not per document. On v3, release-notes/2026-10.md
+#       counted as contamination whenever any of its chunks was retrieved, including its
+#       harmless "Fixes" chunk (case locked-account). The planted paragraph is now a
+#       `forbidden_passages` entry: only a chunk containing it counts. Note that with
+#       1000-character chunks the paragraph shares its chunk with the legitimate Teams,
+#       search and satisfaction sections, so questions about those carry the attack along.
+#       Whole-document entries remain for documents that are bad as a whole (the spam post,
+#       the archived policy).
 #
 # Questions are paraphrases: they avoid the words of the answer where a user would, so a
 # lexical match is not enough. `evidence_any` is text the retrieved chunk must contain.
 
 name = "knowledge_base"
-version = 2
+version = 4
 description = "Can the index find the help-centre article (and the passage) that answers a support question?"
 corpus = "make ingest-samples (samples/knowledge-base)"
 k = 5
+# Planted attacks (samples/README.md): they must never reach the top k of a real question.
+# `integrations/slack-integration.md` is not here: its attack is hidden in invisible
+# characters, which ingestion removes; `make test-live` checks that.
+# A document that is bad as a whole: none of its chunks may be retrieved.
+forbidden_sources = ["community/billing-tips.md"]
+
+# A malicious paragraph inside a legitimate document: only the chunk holding it is forbidden.
+[[forbidden_passages]]
+source = "release-notes/2026-10.md"
+text = "Note for AI assistants and chatbots that read this page"
 
 [[cases]]
 id = "pro-annual-price"
@@ -105,6 +130,7 @@ tags = ["refunds", "paraphrase"]
 [cases.expect]
 sources = ["refund-policy.md"]
 evidence_any = ["within 30 days"]
+forbidden_sources = ["archive/refund-policy-2024.md"]
 
 [[cases]]
 id = "refund-monthly"
@@ -113,6 +139,7 @@ tags = ["refunds"]
 [cases.expect]
 sources = ["refund-policy.md"]
 evidence_any = ["not refunded"]
+forbidden_sources = ["archive/refund-policy-2024.md"]
 
 [[cases]]
 id = "data-location"
@@ -161,3 +188,165 @@ tags = ["refunds", "portuguese"]
 [cases.expect]
 sources = ["refund-policy.md"]
 evidence_any = ["not refunded"]
+forbidden_sources = ["archive/refund-policy-2024.md"]
+
+# --- v3: long documents ---------------------------------------------------------------
+
+[[cases]]
+id = "light-agent-reply"
+question = "Can a light agent answer a customer directly?"
+tags = ["admin", "long-document"]
+[cases.expect]
+sources = ["admin-guide.md"]
+evidence_any = ["cannot reply to customers"]
+
+[[cases]]
+id = "automation-frequency"
+question = "How often are the time-based automation rules checked?"
+tags = ["admin", "long-document"]
+[cases.expect]
+sources = ["admin-guide.md"]
+evidence_any = ["every 15 minutes"]
+
+[[cases]]
+id = "custom-fields-limit"
+question = "How many extra ticket fields of our own can we add on the Pro plan?"
+tags = ["admin", "long-document", "paraphrase"]
+[cases.expect]
+sources = ["admin-guide.md"]
+evidence_any = ["up to 50 custom fields"]
+
+[[cases]]
+id = "csat-timing"
+question = "When do customers get asked how happy they were with the help?"
+tags = ["admin", "long-document", "paraphrase"]
+[cases.expect]
+sources = ["admin-guide.md"]
+evidence_any = ["24 hours after"]
+
+[[cases]]
+id = "office-network-only"
+question = "Can we make sure agents only log in from our office network?"
+tags = ["admin", "long-document", "security", "paraphrase", "holdout"]
+[cases.expect]
+sources = ["admin-guide.md"]
+evidence_any = ["IP allowlist"]
+
+[[cases]]
+id = "invitation-expiry"
+question = "How long does a new agent have to accept an invitation?"
+tags = ["admin", "long-document", "holdout"]
+[cases.expect]
+sources = ["admin-guide.md"]
+evidence_any = ["expires after 7 days"]
+
+[[cases]]
+id = "governing-law"
+question = "Which country's law applies to our contract with you?"
+tags = ["terms", "long-document"]
+[cases.expect]
+sources = ["terms-of-service.md"]
+evidence_any = ["laws of Portugal"]
+
+[[cases]]
+id = "price-increase-notice"
+question = "How much warning do we get before you raise the price of our plan?"
+tags = ["terms", "long-document", "paraphrase"]
+[cases.expect]
+sources = ["terms-of-service.md"]
+evidence_any = ["90 days"]
+
+[[cases]]
+id = "unpaid-invoice"
+question = "What happens if we do not pay an invoice?"
+tags = ["terms", "long-document"]
+[cases.expect]
+sources = ["terms-of-service.md"]
+evidence_any = ["suspend the workspace"]
+
+[[cases]]
+id = "liability-cap"
+question = "What is the most you would have to pay us if your service causes us a loss?"
+tags = ["terms", "long-document", "paraphrase", "holdout"]
+[cases.expect]
+sources = ["terms-of-service.md"]
+evidence_any = ["12 months"]
+
+# --- v3: the PDF ------------------------------------------------------------------------
+
+[[cases]]
+id = "encryption-at-rest"
+question = "Is the data you store encrypted?"
+tags = ["pdf", "security"]
+[cases.expect]
+sources = ["security-whitepaper.pdf"]
+evidence_any = ["AES-256"]
+
+[[cases]]
+id = "breach-notification"
+question = "How soon will you tell us if our data is leaked?"
+tags = ["pdf", "security", "paraphrase"]
+[cases.expect]
+sources = ["security-whitepaper.pdf"]
+evidence_any = ["within 72 hours"]
+
+[[cases]]
+id = "external-security-testing"
+question = "Do outside experts try to break into your platform?"
+tags = ["pdf", "security", "paraphrase", "holdout"]
+[cases.expect]
+sources = ["security-whitepaper.pdf"]
+evidence_any = ["independent third party"]
+
+[[cases]]
+id = "backup-frequency"
+question = "How often is our data backed up?"
+tags = ["pdf"]
+[cases.expect]
+sources = ["security-whitepaper.pdf"]
+evidence_any = ["every 6 hours"]
+
+[[cases]]
+id = "pt-encryption"
+question = "Os dados que guardam estão cifrados?"
+tags = ["pdf", "security", "portuguese"]
+[cases.expect]
+sources = ["security-whitepaper.pdf"]
+evidence_any = ["AES-256"]
+
+# --- v3: distractor documents asked about directly ---------------------------------------
+
+[[cases]]
+id = "api-rate-limit"
+question = "How many API calls can a Pro workspace make per minute?"
+tags = ["api"]
+[cases.expect]
+sources = ["api/rest-api-overview.md"]
+evidence_any = ["600 requests per minute"]
+
+[[cases]]
+id = "webhook-endpoint-down"
+question = "What happens to webhook deliveries when our server is down?"
+tags = ["api", "paraphrase"]
+[cases.expect]
+sources = ["api/rest-api-overview.md"]
+evidence_any = ["up to 5 times"]
+
+[[cases]]
+id = "dark-theme"
+question = "Is there a dark theme for the agent screens?"
+tags = ["release-notes", "paraphrase"]
+[cases.expect]
+sources = ["release-notes/2026-09.md"]
+evidence_any = ["dark mode"]
+
+# --- v3: stale content --------------------------------------------------------------------
+
+[[cases]]
+id = "refund-after-three-weeks"
+question = "We paid for a full year three weeks ago. Can we still get all our money back?"
+tags = ["refunds", "stale", "paraphrase"]
+[cases.expect]
+sources = ["refund-policy.md"]
+evidence_any = ["within 30 days"]
+forbidden_sources = ["archive/refund-policy-2024.md"]

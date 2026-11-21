@@ -13,9 +13,13 @@ The old service was tested on four private PDFs, which cannot go into a public r
 
 ## Decision
 
-1. **A public, fictional sample corpus** in `samples/knowledge-base`: help-centre articles of
-   an invented product (Tessera Support Cloud) whose customers are the mcp-server's mock
-   customers, in Markdown, plain text and a subfolder. `make ingest-samples` puts it in its own
+1. **A public, fictional sample corpus** in `samples/knowledge-base`: the help centre of an
+   invented product (Tessera Support Cloud) whose customers are the mcp-server's mock
+   customers. It is built to be hard in realistic ways rather than large (dataset v3): long
+   documents, a 9-page PDF, distractors that share the questions' words, an archived policy
+   that contradicts the current one, and planted prompt-injection documents. Generated files
+   (the PDF, the hidden-character attack) come from `samples/sources/` through
+   `scripts/build_samples.py`, reproducibly. `make ingest-samples` puts the corpus in its own
    collection (`EVAL_COLLECTION`, default `tessera-kb`), never the real one.
 2. **A small in-repo harness** (`evals/`), mirroring the agent's: TOML dataset validated by
    pydantic (unknown fields rejected), deterministic graders, a JSON report as the source of
@@ -24,8 +28,13 @@ The old service was tested on four private PDFs, which cannot go into a public r
 3. **Metrics** per case, with k fixed by the dataset: hit@k, reciprocal rank (MRR overall),
    recall@k (for questions that need several documents), and **evidence** (a relevant chunk in
    the top k contains the answer text; a hit on the right document with the wrong chunk is a
-   chunking problem, not an embedding problem). Results per tag: plans, SLA, paraphrase,
-   multi-document, Portuguese...
+   chunking problem, not an embedding problem), and **contamination**: the share of questions
+   with a forbidden chunk in the top k (any chunk of a spam document or an outdated policy, or
+   a chunk containing a planted malicious paragraph), which is the risk ADR 0007 is about,
+   measured before any defence exists. The unit is the chunk because that is what reaches
+   the agent's prompt (dataset v4; v3 counted whole documents and over-reported). Results per tag: plans,
+   SLA, paraphrase, multi-document, Portuguese, PDF, stale... Cases tagged `holdout` are never
+   tuned against.
 4. **The eval uses the service's own components** (`build_embedder`, `build_index_provider`
    from `main.py`), so the embedder under test is the one that wrote the index. It refuses to
    run when the dataset's documents are not in the collection.
@@ -57,3 +66,6 @@ The old service was tested on four private PDFs, which cannot go into a public r
   embedder only.
 - Changing a sample document means reviewing the cases and bumping the dataset version; a
   test checks that every expected source exists and every evidence text appears in it.
+- Dataset v2 saturated (18/18, hit@5 100%) on the first six articles, so it could not tell
+  experiments apart; v3 grew the corpus before the first experiment. A dataset is a product:
+  it needs enough difficulty to measure what will change.

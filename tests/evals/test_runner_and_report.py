@@ -70,6 +70,24 @@ async def test_an_unavailable_embedder_aborts_the_eval():
         await RetrievalEvalRunner(DATA, embedder, index).run(DATA.cases[:1])
 
 
+async def test_runner_measures_contamination_by_forbidden_documents():
+    # Arrange: the poison shares the question's words, so it ranks high
+    files = {**FILES, "poison.md": "refund within 30 days refund refund"}
+    index = await filled_index(files)
+    data = dataset(
+        case("refund", "refund within 30 days", ["refunds.md"]), forbidden_sources=["poison.md"]
+    )
+
+    # Act
+    [record] = await RetrievalEvalRunner(data, FakeEmbedder(), index).run(data.cases)
+    summary = summarise([record])
+
+    # Assert
+    assert not record.passed
+    assert summary.contamination_rate == 1.0
+    assert "contamination  100%" in render({"k": 2}, summary, [record])
+
+
 def test_summary_metrics_and_per_tag():
     # Arrange
     records = [record("a", passed=True), record("b", passed=False)]
@@ -82,6 +100,7 @@ def test_summary_metrics_and_per_tag():
     assert summary.hit_rate == pytest.approx(0.5)
     assert summary.mrr == pytest.approx(0.5)
     assert summary.evidence_rate is None
+    assert summary.contamination_rate is None
     assert summary.per_tag["tag"]["hit_rate"] == pytest.approx(0.5)
 
 

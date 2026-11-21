@@ -168,13 +168,17 @@ span ids ([ADR 0006](docs/adr/0006-observability.md)).
 ## Evals
 
 Tests prove the pipeline works; **evals measure whether the index answers questions**. The
-dataset ([evals/datasets/knowledge_base.toml](evals/datasets/knowledge_base.toml)) has 18
-paraphrased support questions over the sample corpus (fictional help-centre articles for the
-mcp-server's mock customers), including a two-document question and three in Portuguese.
+dataset ([evals/datasets/knowledge_base.toml](evals/datasets/knowledge_base.toml)) has 37
+paraphrased support questions over a fictional help centre ([samples/](samples/README.md)) built
+to be hard in realistic ways: long documents, a 9-page PDF, distractors that share the
+question's words, an archived policy that contradicts the current one, and **planted
+prompt-injection documents**. Besides hit@k, MRR, recall and evidence, the evals measure
+**contamination**: how often a poisoned or outdated chunk reaches the top results, i.e. the
+agent's prompt. Cases tagged `holdout` are never tuned against.
 
 ```bash
 make ingest-samples
-make eval                                   # hit@5, MRR, recall@5, evidence, per tag
+make eval                                   # hit@5, MRR, recall@5, evidence, contamination, per tag
 make eval ARGS="--publish"                  # also explore it case by case in Phoenix
 make eval ARGS="--baseline evals/baselines/<report>.json"
 ```

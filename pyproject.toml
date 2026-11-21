@@ -39,6 +39,10 @@ Issues = "https://github.com/jmpoliveira/rag-ingestion-service/issues"
 evals = [
   "arize-phoenix-client>=3.7,<4",
 ]
+# Only to rebuild the generated sample files (scripts/build_samples.py).
+samples = [
+  "reportlab>=5.1,<6",
+]
 dev = [
   "rag-ingestion-service[evals]",
   "pytest>=9,<10",

@@ -8,6 +8,7 @@ to a temporary collection, which is dropped at the end, even when an assertion f
 
 from __future__ import annotations
 
+import unicodedata
 import uuid
 from collections.abc import AsyncIterator
 from pathlib import Path
@@ -18,11 +19,15 @@ import main
 from config.settings import Settings, get_settings
 from src.domain.index import KEY_MODEL
 from src.domain.ingestion import Outcome
+from src.infrastructure.sources.folder import DEFAULT_MEDIA_TYPES
 
 pytestmark = pytest.mark.live
 
 SAMPLES = Path(__file__).resolve().parents[2] / "samples" / "knowledge-base"
-SAMPLE_DOCUMENTS = 6
+SAMPLE_DOCUMENTS = sum(
+    1 for path in SAMPLES.rglob("*") if path.suffix.lower() in DEFAULT_MEDIA_TYPES
+)
+HIDDEN_ATTACK = "integrations/slack-integration.md"
 
 
 @pytest.fixture
@@ -88,3 +93,29 @@ async def test_a_question_finds_its_document_through_the_real_embeddings(
 
     # Assert
     assert "refund-policy.md" in [hit.document_id for hit in hits], hits
+
+
+async def test_the_hidden_attack_never_reaches_the_index(live_settings: Settings):
+    # Arrange: the sample hides an instruction in invisible Unicode tag characters (ADR 0007)
+    await main.build_sync(live_settings).execute()
+
+    # Act
+    inspection = await main.build_inspect(live_settings).execute(HIDDEN_ATTACK)
+
+    # Assert
+    stored = " ".join(chunk.text for chunk in inspection.chunks)
+    assert "Slack" in stored  # the legitimate content is indexed
+    assert not any(unicodedata.category(ch) == "Cf" for ch in stored)
+    assert "ignore all previous rules" not in stored
+
+
+async def test_the_pdf_is_indexed_with_its_page_numbers(live_settings: Settings):
+    # Arrange
+    await main.build_sync(live_settings).execute()
+
+    # Act
+    inspection = await main.build_inspect(live_settings).execute("security-whitepaper.pdf")
+
+    # Assert
+    pages = {chunk.page for chunk in inspection.chunks}
+    assert pages == set(range(1, 10)), pages

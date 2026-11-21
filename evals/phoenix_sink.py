@@ -119,7 +119,14 @@ class PhoenixSink:
         return await datasets.create_dataset(  # pyright: ignore[reportUnknownMemberType]
             name=name,
             inputs=[{"question": case.question} for case in dataset.cases],
-            outputs=[case.expect.model_dump(mode="json") for case in dataset.cases],
+            outputs=[
+                {
+                    **case.expect.model_dump(mode="json"),
+                    "forbidden_sources": sorted(dataset.forbidden_for(case)),
+                    "forbidden_passages": list(dataset.passages),
+                }
+                for case in dataset.cases
+            ],
             metadata=[{"case_id": case.id, "tags": list(case.tags)} for case in dataset.cases],
             dataset_description=dataset.description.strip()
             or f"Retrieval eval dataset {dataset.name} v{dataset.version}",

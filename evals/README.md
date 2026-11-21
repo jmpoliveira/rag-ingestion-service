@@ -47,6 +47,7 @@ dataset's documents are not in the collection.
 | **MRR** | Does the right chunk come *first*? (mean of 1 / rank of the first relevant chunk) |
 | **recall@k** | For questions needing several documents, how many were found? |
 | **evidence** | Does a relevant chunk in the top k contain the answer text? A hit with the wrong chunk points at chunking. |
+| **contamination** | Share of questions with a forbidden **chunk** in the top k: a chunk of a forbidden document (a spam post, an archived policy) or a chunk containing a poisoned passage. Lower is better; it is the risk the screening of ADR 0007 has to remove. |
 | **per tag** | Where the failures are: paraphrases, Portuguese, multi-document... |
 
 A case passes when every check passes. Retrieval is deterministic for a fixed model and index,
@@ -62,7 +63,24 @@ tags = ["refunds", "paraphrase"]
 [cases.expect]
 sources = ["refund-policy.md"]             # document ids: paths relative to the source folder
 evidence_any = ["within 30 days"]          # optional: text the retrieved chunk must contain
+forbidden_sources = ["archive/refund-policy-2024.md"]   # optional: must not be in the top k
 ```
+
+`forbidden_sources` at the top of the dataset applies to every case (documents that are bad
+as a whole); a document a case asks for is never forbidden for that case.
+
+A malicious paragraph inside a legitimate document is declared as a passage, forbidden in
+every case, even when its document is relevant, because what reaches the agent's prompt is
+the chunk:
+
+```toml
+[[forbidden_passages]]
+source = "release-notes/2026-10.md"     # where it was planted (must be indexed)
+text = "Note for AI assistants and chatbots that read this page"
+```
+
+Forbidden documents and the sources of passages must be in the collection, otherwise
+contamination would always read 0: the eval refuses to run without them.
 
 Rules of thumb:
 
@@ -70,9 +88,10 @@ Rules of thumb:
   nothing; write it the way a customer would ask.
 - Bump `version` whenever a case or an expectation changes; reports from different dataset
   fingerprints are not comparable (the comparison warns, publishing refuses).
-- A test checks that every source exists in `samples/knowledge-base` and every evidence text
-  appears in it.
-- Keep a few cases you never tune against, to notice overfitting.
+- A test checks that every source exists in `samples/knowledge-base` (PDF included) and every
+  evidence text appears in it.
+- Cases tagged `holdout` are never used to tune anything (chunking, prefixes, model). If an
+  experiment improves the other cases but not these, it is overfitting to the dataset.
 
 ## Reports and Phoenix
 

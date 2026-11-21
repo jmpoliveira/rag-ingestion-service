@@ -23,13 +23,28 @@ reports with `--baseline`.
   quarter of the index. MRR is the metric that tells experiments apart; read it first.
 - **Read every failure before changing the system.** The only failure of the first run was a
   wrong expectation in the dataset, not a retrieval problem.
+- **Measure the unit that matters.** Contamination per document over-reported: a document
+  with one malicious paragraph is harmful only through the chunk that holds it.
+- **GitHub's "rebase and merge" gives commits new hashes.** A report records the commit it ran
+  on, which is the branch commit; eval branches are therefore kept after merging, so every
+  `git_commit` in a report stays reachable.
+- **A saturated dataset cannot compare anything.** E0 on v2 passed 18/18 with hit@5 100%, so
+  E1 and E2 could only differ by a few hundredths of MRR. Dataset v3 grows the corpus to 16
+  documents (long documents, a PDF, distractors, an archived policy, planted attacks) and 37
+  cases, before any experiment runs. The E0 baseline is therefore re-run on v3 (E0').
 
 ## Log
 
-### E0: defaults (baseline)
+### E0': defaults on dataset v4 (the baseline for E1 onwards)
+
+To be recorded: same settings as E0, on the v3 corpus, with contamination measured per chunk
+(dataset v4). A first run on dataset v3, which counted whole documents, was used to design v4
+and is not kept.
+
+### E0: defaults (baseline on dataset v2)
 
 Setting: `nomic-embed-text` (Ollama), no prefixes, chunks 1000/200, cosine, k = 5.
-Collection `tessera-kb`. Commit `3c75894`.
+Collection `tessera-kb`. The v1 run was on commit `3c75894`.
 
 **First run, dataset v1** (report not kept; replaced by the v2 run below):
 17/18 passed, hit@5 100%, MRR 0.889, recall@5 97%, evidence 100%.
@@ -48,7 +63,8 @@ Also noted: margins between rank 1 and rank 2 are often a few hundredths of a di
 rankings are right but fragile; with 1000-character chunks most documents are one or two
 chunks, so `evidence` is easy here (E2 will make it meaningful).
 
-**Baseline run, dataset v2** (commit `181b4b2`, clean tree; report
+**Baseline run, dataset v2** (commit `181b4b2` on branch `eval/e0-baseline`, kept for
+provenance; the rebase merge put it on `main` as `adcf20d`. Clean tree; report
 `evals/baselines/20261119-173333-tessera-kb-knowledge_base.json`):
 
 | Metric | Value |

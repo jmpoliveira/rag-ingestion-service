@@ -10,7 +10,7 @@ COMPOSE     := docker compose
 COMPOSE_ENV := docker compose -f docker-compose.yml -f docker-compose.docker-env.yml
 
 .PHONY: help venv install ingest ingest-samples inspect inspect-samples reset reset-samples eval publish test cov lint format \
-        typecheck check test-live docker-build up up-env clean
+        typecheck check test-live build-samples docker-build up up-env clean
 
 help:  ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -76,6 +76,11 @@ typecheck:  ## Static type checking with pyright (strict)
 	$(BIN)/pyright --pythonpath $(PYTHON)
 
 check: lint typecheck test  ## Run lint, typecheck and tests (use before a commit)
+
+# ---------- Sample corpus ----------
+build-samples:  ## Rebuild the generated sample files (PDF, hidden-attack document) from samples/sources
+	$(PYTHON) -m pip install -q -e ".[samples]"
+	$(PYTHON) scripts/build_samples.py
 
 # ---------- Docker ----------
 docker-build:  ## Build the Docker image

@@ -72,7 +72,11 @@ make eval         # retrieval evals (needs Ollama and Chroma; not part of make c
   that reach real services are marked `live` (`tests/integration/`), skipped unless `--live`.
 - Cover edge cases: empty input, oversized input, corrupted and encrypted files, malformed
   provider output, missing settings.
-- Changing a sample document or an eval case: bump the dataset `version`.
+- Changing a sample document or an eval case: bump the dataset `version`. Generated samples
+  (the PDF, the hidden-attack document) are edited in `samples/sources/` and rebuilt with
+  `make build-samples`; never edit the generated files by hand.
+- Files in `samples/knowledge-base/` with prompt-injection text are planted test fixtures
+  (`samples/README.md`); never "fix" them.
 - Do not commit or push unless asked.
 
 ## Git workflow

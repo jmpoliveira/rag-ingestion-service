@@ -89,7 +89,13 @@ class RetrievalEvalRunner:
                 hits = tuple(await self._index.search(vector, k))
             except FatalError as err:
                 raise EvalAbortedError(str(err)) from err
-            scores, checks = grade(hits, case.expect, k)
+            scores, checks = grade(
+                hits,
+                case.expect,
+                k,
+                self._dataset.forbidden_for(case),
+                self._dataset.passages,
+            )
             span.set_attribute("eval.passed", all(check.passed for check in checks))
             context = span.get_span_context()
         return CaseRecord(
