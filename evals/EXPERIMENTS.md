@@ -37,9 +37,56 @@ reports with `--baseline`.
 
 ### E0': defaults on dataset v4 (the baseline for E1 onwards)
 
-To be recorded: same settings as E0, on the v3 corpus, with contamination measured per chunk
-(dataset v4). A first run on dataset v3, which counted whole documents, was used to design v4
-and is not kept.
+Same settings as E0 (`nomic-embed-text`, no prefixes, chunks 1000/200, cosine, k = 5) on
+the v3 corpus (16 documents), with contamination measured per chunk (dataset v4). Commit
+`7fe52a6` on branch `eval/corpus-v3-b`, clean tree; report
+`evals/baselines/20261121-173133-tessera-kb-knowledge_base.json`. A first run on dataset v3,
+which counted whole documents, was used to design v4 and is not kept.
+
+| Metric | E0 (v2, 6 documents) | **E0' (v4, 16 documents)** |
+|---|---|---|
+| hit@5 | 100% | **94.6%** |
+| **MRR** | 0.889 | **0.809** |
+| recall@5 | 100% | 94.6% |
+| evidence | 100% | 94.6% |
+| **contamination** | - | **48.6%** (18/37) |
+| pass rate | 100% | 51.4% (mostly contamination) |
+
+The corpus did its job: the numbers now say things. Read quality (hit, MRR) and safety
+(contamination) separately; the pass rate mixes them.
+
+**1. One spam document does most of the damage.** `community/billing-tips.md` (keyword
+stuffing plus an instruction) is in the top 5 of 17 of the 37 questions, and at rank 1 in
+two: `cancelled-workspace` and `pt-monthly-refund`, which lose their relevant document
+entirely. Those are the only two hit failures: a single malicious document took hit@5 from
+100% to 94.6%. Without it, contamination would be 5/37 (13.5%). Screening at ingestion
+(ADR 0007, decision 4) is therefore a quality measure as much as a security one.
+
+**2. The archived policy outranks the current one.** In 3 of the 4 refund questions,
+`archive/refund-policy-2024.md` (14 days) is at rank 1, ahead of `refund-policy.md` (30 days):
+it is shorter and more focused, so its vector is "purer". The agent would read the wrong rule
+first. No embedding can fix this, because both versions say the same thing with different
+numbers: it needs document lifecycle metadata (status, validity dates) and a filter in the
+retriever. Candidate ADR.
+
+**3. The planted paragraph travels with its neighbours.** `release-notes/2026-10.md` has two
+chunks; the first holds the Teams, search and satisfaction sections *and* the malicious
+paragraph. `dark-theme` (a question about the September notes) pulls that chunk at rank 3.
+Smaller chunks would isolate the paragraph: E2 is also a security experiment.
+
+**4. The rest of the index is healthy.**
+- PDF: 5/5 at rank 1, with the right page (encryption on page 3, incidents on page 7).
+- Long documents: hit 100%, MRR 0.82; `evidence` finds the right section inside a
+  2,800-word guide.
+- Weak: `price-increase-notice` (rank 4: "Changing plan" in the pricing article beats the
+  price clause of the terms), `liability-cap` (2), `free-seat-limit` (3),
+  `erasure-request` (3), Portuguese (hit 0.67).
+- Holdout: hit 100%, MRR 0.75, in line with the rest (nothing has been tuned yet).
+
+**Next, in order:** E1 (prefixes), which may also weaken the keyword-stuffing effect; then
+E2 (chunks of 500/100), for ranking and for isolating the planted paragraph; then the
+lifecycle metadata for archived documents and the screening of ADR 0007, whose target is
+contamination 0 without losing relevant documents.
 
 ### E0: defaults (baseline on dataset v2)
 
