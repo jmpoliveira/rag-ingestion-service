@@ -7,6 +7,11 @@
 - **recall@k**: share of the relevant documents found, for questions that need several.
 - **evidence**: a relevant chunk in the top k contains the answer text. A hit on the right
   document with the wrong chunk is a chunking problem, not an embedding problem.
+- **uncontaminated**: no forbidden chunk is in the top k: no chunk of a forbidden document (a
+  spam post, an archived policy) and no chunk containing a poisoned passage (an instruction
+  hidden in an otherwise legitimate document). Its failure rate is the contamination rate:
+  how often poisoned or stale text would reach the agent's prompt. The unit is the chunk,
+  because that is what the agent reads.
 """
 
 from __future__ import annotations
@@ -49,7 +54,13 @@ def score(hits: Sequence[SearchHit], expect: Expect) -> Scores:
     )
 
 
-def grade(hits: Sequence[SearchHit], expect: Expect, k: int) -> tuple[Scores, tuple[Check, ...]]:
+def grade(
+    hits: Sequence[SearchHit],
+    expect: Expect,
+    k: int,
+    forbidden: frozenset[str] = frozenset(),
+    passages: Sequence[str] = (),
+) -> tuple[Scores, tuple[Check, ...]]:
     scores = score(hits, expect)
     retrieved = ", ".join(f"{hit.document_id}#p{hit.page}" for hit in hits) or "nothing"
     checks = [
@@ -68,7 +79,28 @@ def grade(hits: Sequence[SearchHit], expect: Expect, k: int) -> tuple[Scores, tu
     ]
     if expect.evidence_any:
         checks.append(_evidence(hits, expect))
+    if forbidden or passages:
+        checks.append(_uncontaminated(hits, forbidden, passages))
     return scores, tuple(checks)
+
+
+def _uncontaminated(
+    hits: Sequence[SearchHit], forbidden: frozenset[str], passages: Sequence[str]
+) -> Check:
+    poison = [_normalise(text) for text in passages]
+    found: list[str] = []
+    for rank, hit in enumerate(hits, start=1):
+        if hit.document_id in forbidden:
+            found.append(f"{hit.document_id}@{rank}")
+        elif any(text in _normalise(hit.text) for text in poison):
+            found.append(f"{hit.document_id}@{rank} (poisoned passage)")
+    if found:
+        return Check("uncontaminated", False, f"forbidden chunks retrieved: {', '.join(found)}")
+    return Check(
+        "uncontaminated",
+        True,
+        f"no chunk of {len(forbidden)} forbidden documents or {len(poison)} poisoned passages",
+    )
 
 
 def _evidence(hits: Sequence[SearchHit], expect: Expect) -> Check:

@@ -16,5 +16,6 @@ tests
 evals
 docs
 samples
+scripts
 Dockerfile
 docker-compose*.yml

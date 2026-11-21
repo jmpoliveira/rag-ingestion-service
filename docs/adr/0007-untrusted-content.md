@@ -59,6 +59,15 @@ The natural first idea is to detect injections here and remove them, so that the
 - Plain-language injections stay in the indexed text until decision 4 is implemented; the
   README's security notes say so, and the agent's injection eval cases must cover retrieved
   documents once `search_knowledge_base` exists.
+- The risk is measured before it is mitigated: the sample corpus has planted attacks (a
+  visible instruction inside release notes, a keyword-stuffed community post, an instruction
+  hidden in Unicode tag characters), and the retrieval evals report the **contamination
+  rate**, the share of questions whose top k includes a poisoned chunk. A malicious paragraph
+  travels with whatever legitimate text shares its chunk, so chunking is part of the attack
+  surface: smaller chunks isolate it, and questions about the neighbouring sections stop
+  pulling it in. Decision 4 is done
+  when that rate reaches 0 without losing relevant documents. The hidden-character attack is
+  checked deterministically (unit test and `make test-live`): it never reaches the index.
 - Decision 4 adds an external dependency on the ingestion path, a cost per document, a new
   outcome in reports and exit codes to review, and a threshold to tune with evals (precision
   of the quarantine on a set of benign and malicious documents).

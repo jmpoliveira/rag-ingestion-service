@@ -26,6 +26,8 @@ class Summary:
     mrr: float
     mean_recall: float
     evidence_rate: float | None
+    # Share of cases with a forbidden document in the top k (None: nothing is forbidden).
+    contamination_rate: float | None
     mean_latency_seconds: float
     per_tag: dict[str, dict[str, float]]
 
@@ -42,6 +44,7 @@ def summarise(records: Sequence[CaseRecord]) -> Summary:
         return sum(values) / len(values) if values else 0.0
 
     evidence = [c.passed for r in records for c in r.checks if c.name == "evidence"]
+    clean = [c.passed for r in records for c in r.checks if c.name == "uncontaminated"]
     tags = sorted({tag for record in records for tag in record.tags})
     per_tag = {
         tag: {
@@ -59,6 +62,7 @@ def summarise(records: Sequence[CaseRecord]) -> Summary:
         mrr=mean([r.scores.reciprocal_rank for r in records]),
         mean_recall=mean([r.scores.recall for r in records]),
         evidence_rate=mean([float(p) for p in evidence]) if evidence else None,
+        contamination_rate=mean([float(not p) for p in clean]) if clean else None,
         mean_latency_seconds=mean([r.latency_seconds for r in records]),
         per_tag=per_tag,
     )
@@ -84,6 +88,8 @@ def render(
     ]
     if summary.evidence_rate is not None:
         lines.append(f"  evidence       {summary.evidence_rate:.0%}")
+    if summary.contamination_rate is not None:
+        lines.append(f"  contamination  {summary.contamination_rate:.0%}  (lower is better)")
     lines.append(f"  latency (avg)  {summary.mean_latency_seconds:.2f}s")
     if summary.per_tag:
         lines += ["", "  per tag: hit rate / MRR"]
@@ -109,10 +115,10 @@ def _compare(meta: Mapping[str, Any], summary: Summary, baseline: Mapping[str, A
     lines = [f"  compared with baseline (model {base_meta.get('embedding_model')}):"]
     if base_meta.get("dataset_fingerprint") != meta.get("dataset_fingerprint"):
         lines.append("    WARNING: the baseline was graded with another dataset; deltas mislead")
-    for name in ("pass_rate", "hit_rate", "mrr", "mean_recall"):
+    for name in ("pass_rate", "hit_rate", "mrr", "mean_recall", "contamination_rate"):
         before = base_summary.get(name)
-        if isinstance(before, int | float):
-            now = cast(float, getattr(summary, name))
+        now = getattr(summary, name)
+        if isinstance(before, int | float) and isinstance(now, int | float):
             lines.append(f"    {name:<12} {before:.3f} -> {now:.3f} ({now - before:+.3f})")
     return lines
 
